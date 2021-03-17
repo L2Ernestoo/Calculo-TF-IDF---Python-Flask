@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculo TF_IDF - Ernesto Orellana</title>
+    <link href="{{ url_for('static', filename= 'tailwind.min.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', filename= 'js/jquery.js') }}"></script>
+</head>
+<body class="bg-gray-300 flex flex-col min-h-screen">
+<!-- This example requires Tailwind CSS v2.0+ -->
+<div class="py-12 bg-gray-300">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="lg:text-center">
+      <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">Calculo TF-IDF</h2>
+      <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+        Jorge Orellana - 0909-17-7161
+      </p>
+      <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+        Frecuencia Normal, Inversa, Multiplicada
+      </p>
+        <p class="mt-2 lg:text-justify max-w-2xl text-md text-gray-500 lg:mx-auto">
+            <textarea placeholder="Escriba el texto para analizar" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2 sm:text-sm border-gray-300 rounded-md" name="txt" id="txt_area" cols="30" rows="8"></textarea>
+            <br>
+            <div class="flex justify-center">
+            <button class="btnAnalizar bg-blue-400 p-3 rounded border-indigo-500 text-white m-4 hover:bg-red-700">Analizar</button>
+            <button class="btnLimpiar bg-green-700 p-3 rounded border-indigo-500 text-white m-4 hover:bg-pink-700">Limpiar</button>
+        </div>
+        </p>
+        <br>
+        <div class="response"></div>
+    </div>
+
+  </div>
+</div>
+<script>
+    const btnAnalizar = $('.btnAnalizar')
+    const responseData = $('.response')
+    const btnLimpiar = $('.btnLimpiar')
+    const textareaL = $('#txt_area')
+    btnAnalizar.click(function() {
+        let datatext = document.getElementById("txt_area").value
+        $.ajax({
+        type: "POST",
+        url: 'convertidor_out',
+        data: {txt: datatext},
+            success: function (response) {
+                responseData.html(response)
+            }
+        })
+    });
+
+    btnLimpiar.click(function () {
+        textareaL.val('')
+        responseData.html('')
+    })
+</script>
+<br><br><br>
+<footer class="footer bg-white relative border-b-2 mt-16">
+    <div class="container mx-auto px-6 mt-14">
+        <div class="flex justify-center">
+            <a href="/" class="btnAnalizar bg-green-400 p-1 rounded border-green-500 text-white mr-4">Inicio</a>
+            <a href="/calcular" class="btnAnalizar bg-green-400 p-1 rounded border-green-500 text-white mr-4">Calcular TF-IDF</a>
+            <a href="acerca-de" class="btnAnalizar bg-green-400 p-1 rounded border-green-500 text-white mr-4">Acerca De</a>
+        </div>
+        <div class="border-t-2 border-gray-300 flex mt-10 flex-col items-center">
+             <p class="text-sm text-blue-700 font-bold mb-2">
+                    © 2021 - Jorge Orellana
+                </p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
